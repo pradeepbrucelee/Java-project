@@ -1,0 +1,30 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('git JOb') {
+            steps {
+                echo 'git clone'
+                git branch: 'main', url: 'https://github.com/pradeepbrucelee/Java-project.git'
+            }
+        }
+        stage('build job') {
+            steps {
+                echo 'building ..'
+                sh 'mvn compile'
+            }
+        }
+        stage('Test job') {
+            steps {
+                echo 'testing'
+                sh 'mvn test'
+            }
+        }
+        stage('Deploy job') {
+            steps {
+                echo 'instaling...'
+                archiveArtifacts artifacts:  '**/target/*.war', followSymlinks: false
+                 }
+        }
+    }
+}
